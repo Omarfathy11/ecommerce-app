@@ -10,10 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Homepage extends StatelessWidget {
   final pagecotroller = PageController();
-  
+
   Homepage({
     super.key,
-    
   });
 
   @override
@@ -21,19 +20,18 @@ class Homepage extends StatelessWidget {
     final cubit = BlocProvider.of<LayoutCubit>(context);
     return BlocConsumer<LayoutCubit, LayoutStates>(
       listener: (context, state) {
-        if(state is GetProductDetailssSuccessState){
-             Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetailsScreen(productModel: state.model,
-                              
-                            ),
-                          ),
-                        );
+        if (state is GetProductDetailssSuccessState) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailsScreen(
+                productModel: state.model,
+              ),
+            ),
+          );
         }
       },
       builder: (context, state) {
-        print(cubit.products.length);
         return Scaffold(
             body: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -43,17 +41,20 @@ class Homepage extends StatelessWidget {
               TextFormField(
                 onChanged: (input) {
                   cubit.filterProducts(input: input);
-                  cubit.filterCategories(input : input);
                 },
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
                     hintText: "Search",
-                    suffixIcon: InkWell(onTap: (){Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Homepage()
-                          ),
-                        );},child: const Icon(Icons.clear,)),
+                    suffixIcon: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Homepage()),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.clear,
+                        )),
                     filled: true,
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
@@ -123,7 +124,7 @@ class Homepage extends StatelessWidget {
                       width: double.infinity,
                       child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: cubit.filteredCategories.isEmpty ? cubit.categories.length : cubit.filteredCategories.length,
+                          itemCount: cubit.categories.length,
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: ((context, index) {
                             return const SizedBox(
@@ -132,9 +133,7 @@ class Homepage extends StatelessWidget {
                           }),
                           itemBuilder: (context, index) {
                             return Text(
-                              cubit.filteredCategories.isEmpty
-                                    ? cubit.categories[index].name!
-                                    : cubit.filteredCategories[index].name!,
+                              cubit.categories[index].name!,
                               style: const TextStyle(fontSize: 20),
                             );
                           }),
@@ -154,29 +153,29 @@ class Homepage extends StatelessWidget {
                   ? const Center(
                       child: CupertinoActivityIndicator(),
                     )
-                  :  GridView.builder(
-                          itemCount: cubit.filteredProducts.isEmpty
-                              ? cubit.products.length
-                              : cubit.filteredProducts.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                               onTap: () {
-                                cubit.getproductDetails(productid : cubit.products[index].id!);
-                       },
-                            child: _productItem(
-                                  model: cubit.filteredProducts.isEmpty
-                                      ? cubit.products[index]
-                                      : cubit.filteredProducts[index]),
-                            );
-                          }),
-                    
+                  : GridView.builder(
+                      itemCount: cubit.filteredProducts.isEmpty
+                          ? cubit.products.length
+                          : cubit.filteredProducts.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            cubit.getproductDetails(
+                                productid: cubit.products[index].id!);
+                          },
+                          child: _productItem(
+                              model: cubit.filteredProducts.isEmpty
+                                  ? cubit.products[index]
+                                  : cubit.filteredProducts[index]),
+                        );
+                      }),
             ],
           ),
         ));

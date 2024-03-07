@@ -142,7 +142,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
     var responseBody = jsonDecode(response.body);
     print(" product details : $responseBody");
     if (response.statusCode == 200) {
-      model = ProductModel.fromJson(data : responseBody);
+      model = ProductModel.fromJson(data : responseBody); // عشان الداتا محطوطة في ماب فلازم اعملها fromjson
       emit(GetProductDetailssSuccessState(model!));
     } else {
       emit(FailedToGetProductsDetailsState());

@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: passwordController.text);
                         }
                       },
-                       child:   Text(
+                       child:  Text(
                         state is RegisterLoadingState ? "Loading ..." : "Login",
                         style:  TextStyle(fontSize: 17, color: Colors.black),
                       ),

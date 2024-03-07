@@ -1,19 +1,110 @@
+import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
+import 'package:finalproject/layout/layout_cubit/layout_state.dart';
+import 'package:finalproject/models/categories.dart';
+import 'package:finalproject/shared/style/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold
-    (
-      body: Column(
-        children:const [
-          Text('Categories', style: TextStyle(fontSize: 40),)
-        ],
-      ),
+    final cubit = BlocProvider.of<LayoutCubit>(context);
+
+    List<CategoriesModel> categoriesdata =
+        BlocProvider.of<LayoutCubit>(context).categories;
+    return BlocConsumer<LayoutCubit, LayoutStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          body: Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextFormField(
+                onChanged: (input) {
+                  cubit.filterCategories(input: input);
+                },
+                decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: "Search",
+                    suffixIcon: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CategoriesScreen()),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.clear,
+                        )),
+                    filled: true,
+                    fillColor: Colors.grey.withOpacity(0.3),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    contentPadding: EdgeInsets.zero),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                Text(
+                  "categories",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: mainColor),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            categoriesdata.isEmpty
+                ? const Center(
+                    child: CupertinoActivityIndicator(),
+                  )
+                : SizedBox(
+                    height: 200,
+                    width: double.infinity,
+                    child: GridView.builder(
+                        itemCount: cubit.filteredCategories.isEmpty
+                            ? categoriesdata.length
+                            : cubit.filteredCategories.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 10),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            child: Column(
+                              children: [
+                                Text(
+                                  cubit.filteredCategories.isEmpty
+                                      ? categoriesdata[index].name!
+                                      : cubit.filteredCategories[index].name!,
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+          ]),
+        );
+      },
     );
   }
 }
