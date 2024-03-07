@@ -10,17 +10,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Homepage extends StatelessWidget {
   final pagecotroller = PageController();
-  final ProductModel? productModel;
-  final int? productId;
+  
   Homepage({
-    super.key, this.productModel,  this.productId,
+    super.key,
+    
   });
 
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<LayoutCubit>(context);
     return BlocConsumer<LayoutCubit, LayoutStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is GetProductDetailssSuccessState){
+             Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailsScreen(productModel: state.model,
+                              
+                            ),
+                          ),
+                        );
+        }
+      },
       builder: (context, state) {
         print(cubit.products.length);
         return Scaffold(
@@ -32,11 +43,17 @@ class Homepage extends StatelessWidget {
               TextFormField(
                 onChanged: (input) {
                   cubit.filterProducts(input: input);
+                  cubit.filterCategories(input : input);
                 },
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
                     hintText: "Search",
-                    suffixIcon: const Icon(Icons.clear),
+                    suffixIcon: InkWell(onTap: (){Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Homepage()
+                          ),
+                        );},child: const Icon(Icons.clear,)),
                     filled: true,
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
@@ -47,34 +64,19 @@ class Homepage extends StatelessWidget {
               const SizedBox(
                 height: 14,
               ),
-              cubit.banners.isEmpty
-                  ? const Center(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : SizedBox(
-                      height: 150,
-                      width: double.infinity,
-                      child: PageView.builder(
-                          controller: pagecotroller,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 15),
-                              child: Image.network(
-                                cubit.banners[index].url!,
-                                fit: BoxFit.fill,
-                              ),
-                            );
-                          }),
-                    ),
+              Container(
+                margin: const EdgeInsets.only(right: 15),
+                child: Image.asset(
+                  "images/Frame 560.png",
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
               Center(
                 child: SmoothPageIndicator(
                   controller: pagecotroller,
-                  count: 5,
+                  count: 3,
                   axisDirection: Axis.horizontal,
                   effect: const SlideEffect(
                       spacing: 8.0,
@@ -121,7 +123,7 @@ class Homepage extends StatelessWidget {
                       width: double.infinity,
                       child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: cubit.categories.length,
+                          itemCount: cubit.filteredCategories.isEmpty ? cubit.categories.length : cubit.filteredCategories.length,
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: ((context, index) {
                             return const SizedBox(
@@ -130,8 +132,10 @@ class Homepage extends StatelessWidget {
                           }),
                           itemBuilder: (context, index) {
                             return Text(
-                              cubit.categories[index].name!,
-                              style: TextStyle(fontSize: 20),
+                              cubit.filteredCategories.isEmpty
+                                    ? cubit.categories[index].name!
+                                    : cubit.filteredCategories[index].name!,
+                              style: const TextStyle(fontSize: 20),
                             );
                           }),
                     ),
@@ -150,17 +154,7 @@ class Homepage extends StatelessWidget {
                   ? const Center(
                       child: CupertinoActivityIndicator(),
                     )
-                  : InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetailsScreen(
-                                 productId: productId, productModel: productModel,),
-                          ),
-                        );
-                      },
-                      child: GridView.builder(
+                  :  GridView.builder(
                           itemCount: cubit.filteredProducts.isEmpty
                               ? cubit.products.length
                               : cubit.filteredProducts.length,
@@ -172,12 +166,17 @@ class Homepage extends StatelessWidget {
                                   mainAxisSpacing: 10,
                                   crossAxisSpacing: 10),
                           itemBuilder: (context, index) {
-                            return _productItem(
-                                model: cubit.filteredProducts.isEmpty
-                                    ? cubit.products[index]
-                                    : cubit.filteredProducts[index]);
+                            return InkWell(
+                               onTap: () {
+                                cubit.getproductDetails(productid : cubit.products[index].id!);
+                       },
+                            child: _productItem(
+                                  model: cubit.filteredProducts.isEmpty
+                                      ? cubit.products[index]
+                                      : cubit.filteredProducts[index]),
+                            );
                           }),
-                    ),
+                    
             ],
           ),
         ));
@@ -210,13 +209,8 @@ Widget _productItem({required ProductModel model}) {
                 child: Row(
               children: [
                 Text(
-                  "${model.quantity!} \$",
+                  "${model.price!} \$",
                   style: const TextStyle(fontSize: 13),
-                ),
-                Text(
-                  "${model.quantity!}  ",
-                  style: const TextStyle(
-                      fontSize: 13, overflow: TextOverflow.ellipsis),
                 ),
               ],
             )),
@@ -230,10 +224,6 @@ Widget _productItem({required ProductModel model}) {
             )
           ],
         ),
-        Text(
-          model.description!,
-          style: const TextStyle(fontSize: 5),
-        )
       ],
     ),
   );

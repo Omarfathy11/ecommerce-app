@@ -16,7 +16,7 @@ class LayoutScreen extends StatelessWidget {
 
      
       builder: (context, state) {
-        return Scaffold(appBar: AppBar(backgroundColor: thirdColor,title: Image.asset('images/241312663_1046842842809104_273137829881731176_n.png', height: 150,width: 150,),
+        return Scaffold(appBar: AppBar(backgroundColor: thirdColor,title: Image.asset('images/Frame 928.png', height: 150,width: 150,),
         
         ),
       bottomNavigationBar: BottomNavigationBar(

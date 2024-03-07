@@ -1,3 +1,5 @@
+import 'package:finalproject/models/products_model.dart';
+
 abstract class LayoutStates{} 
 
 class LayoutInitialState extends LayoutStates{}
@@ -24,9 +26,14 @@ class GetProductsLoadingState extends LayoutStates{}
 class FailedToGetProductsState extends LayoutStates{}
 
 
-class GetProductDetailssSuccessState extends LayoutStates{}
+class GetProductDetailssSuccessState extends LayoutStates{
+  final ProductModel model;
+
+  GetProductDetailssSuccessState(this.model);
+}
 class GetProductsDetailsLoadingState extends LayoutStates{}
 class FailedToGetProductsDetailsState extends LayoutStates{}
 
 
 class filterproductSuccessState extends LayoutStates{}
+class filtercategoriesSuccessState extends LayoutStates{}

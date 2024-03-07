@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final int? productId;
-  final ProductModel? productModel;
+  
+  final ProductModel productModel;
 
-  ProductDetailsScreen({required this.productId, required this.productModel});
+  ProductDetailsScreen({ required this.productModel});
 
   @override
   Widget build(BuildContext context) {

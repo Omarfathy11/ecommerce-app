@@ -64,7 +64,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
       print("Error fetching user data: $e");
     }
   }
-
+/*
   List<BannerModel> banners = [];
   void getBannersData() async {
     Response response =
@@ -79,7 +79,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
       emit(FailedToGetBannersState());
     }
   }
-
+*/
   List<CategoriesModel> categories = [];
   void getCategoriesData() async {
     Response response = await http.get(Uri.parse(
@@ -124,17 +124,26 @@ class LayoutCubit extends Cubit<LayoutStates> {
         .toList();
     emit(filterproductSuccessState());
   }
+  List<CategoriesModel> filteredCategories = [];
+  void filterCategories({required String input}) {
+    filteredCategories = categories
+        .where((element) =>
+            element.name!.toLowerCase().startsWith(input.toLowerCase()))
+        .toList();
+    emit(filtercategoriesSuccessState());
+  }
   
- 
-  void getproductDetails({int? productid}) async {
+  ProductModel? model;
+  void getproductDetails({required int productid, int? productId}) async {
         emit(GetProductsDetailsLoadingState());
 
     Response response = await http.get(Uri.parse(
         'https://django-server-kiaw-production.up.railway.app/api/products/$productid'));
     var responseBody = jsonDecode(response.body);
-    print(" details : $responseBody");
+    print(" product details : $responseBody");
     if (response.statusCode == 200) {
-      emit(GetProductDetailssSuccessState());
+      model = ProductModel.fromJson(data : responseBody);
+      emit(GetProductDetailssSuccessState(model!));
     } else {
       emit(FailedToGetProductsDetailsState());
     }

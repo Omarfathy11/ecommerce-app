@@ -3,7 +3,7 @@ class ProductModel {
   String? name;
   String? description;
   String? image;
-  //double? price;
+  String? price;
   int? quantity;
  
 
@@ -14,7 +14,7 @@ class ProductModel {
     description = data['description'].toString();
     image = data['image'].toString();
     name = data['name'].toString();
-  //  price = data['price'].toDouble();
+    price = data['price'].toString();
     quantity = data['quantity'].toInt();
     
 

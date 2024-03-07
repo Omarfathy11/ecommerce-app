@@ -30,16 +30,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => LayoutCubit()
             ..getUserData()
-            ..getBannersData()
             ..getCategoriesData()
             ..getProductsData()
-            ..getproductDetails()
+            
             ,
         )
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: token != null && token == " " ?  LoginScreen() : LayoutScreen()),
+        home: token != null && token == " " ?  LoginScreen() : LayoutScreen()),
     );
   }
 }
