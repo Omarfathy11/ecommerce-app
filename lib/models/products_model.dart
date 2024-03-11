@@ -4,7 +4,7 @@ class ProductModel {
   String? description;
   String? image;
   String? price;
-  int? quantity;
+  String? main_image;
  
 
   // Nmaed constrcutor | refaatoring
@@ -13,9 +13,9 @@ class ProductModel {
     id = data['id'].toInt();
     description = data['description'].toString();
     image = data['image'].toString();
+    main_image = data['main_image'].toString();
     name = data['name'].toString();
     price = data['price'].toString();
-    quantity = data['quantity'].toInt();
     
 
   }

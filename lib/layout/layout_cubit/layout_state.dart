@@ -11,9 +11,7 @@ class FailedToGetUserDataState extends LayoutStates{
   String error;
   FailedToGetUserDataState({required this.error});
 }
-class GetBannersSuccessState extends LayoutStates{}
-class GetBannersLoadingState extends LayoutStates{}
-class FailedToGetBannersState extends LayoutStates{}
+
 
 
 class GetCategotiesSuccessState extends LayoutStates{}
@@ -37,3 +35,13 @@ class FailedToGetProductsDetailsState extends LayoutStates{}
 
 class filterproductSuccessState extends LayoutStates{}
 class filtercategoriesSuccessState extends LayoutStates{}
+
+class GetFavorietsSuccessState extends LayoutStates{}
+class FailedToGetFavorietsState extends LayoutStates{}
+
+class AddFavorietsSuccessState extends LayoutStates{}
+
+class AddFavorietsFailedState extends LayoutStates{}
+
+class RemoveFavorietsSuccessState extends LayoutStates{}
+class RemoveFavorietsFailedState extends LayoutStates{}

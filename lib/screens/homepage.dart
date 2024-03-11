@@ -2,6 +2,7 @@ import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
 import 'package:finalproject/layout/layout_cubit/layout_state.dart';
 import 'package:finalproject/models/products_model.dart';
 import 'package:finalproject/screens/details_screen.dart';
+import 'package:finalproject/shared/constants/constants.dart';
 import 'package:finalproject/shared/style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class Homepage extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        print(cubit.products.length);
         return Scaffold(
             body: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -55,8 +57,7 @@ class Homepage extends StatelessWidget {
                         child: const Icon(
                           Icons.clear,
                         )),
-                    filled: true,
-                    fillColor: Colors.grey.withOpacity(0.3),
+                    
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
                     ),
@@ -103,13 +104,6 @@ class Homepage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: mainColor),
                   ),
-                  Text(
-                    "View all",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: secondColor),
-                  )
                 ],
               ),
               const SizedBox(
@@ -149,6 +143,9 @@ class Homepage extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               cubit.products.isEmpty
                   ? const Center(
                       child: CupertinoActivityIndicator(),
@@ -162,8 +159,9 @@ class Homepage extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10),
+                              mainAxisSpacing: kDefaultPaddin,
+                              crossAxisSpacing: kDefaultPaddin,
+                              childAspectRatio: 0.75),
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
@@ -173,7 +171,7 @@ class Homepage extends StatelessWidget {
                           child: _productItem(
                               model: cubit.filteredProducts.isEmpty
                                   ? cubit.products[index]
-                                  : cubit.filteredProducts[index]),
+                                  : cubit.filteredProducts[index], cubit: cubit),
                         );
                       }),
             ],
@@ -184,10 +182,8 @@ class Homepage extends StatelessWidget {
   }
 }
 
-Widget _productItem({required ProductModel model}) {
+Widget _productItem({required ProductModel model, required LayoutCubit cubit}) {
   return Container(
-    height: 200,
-    color: Colors.grey.withOpacity(0.2),
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     child: Column(
       children: [
@@ -201,28 +197,20 @@ Widget _productItem({required ProductModel model}) {
           style: const TextStyle(
               fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-                child: Row(
-              children: [
-                Text(
-                  "${model.price!} \$",
-                  style: const TextStyle(fontSize: 13),
-                ),
-              ],
-            )),
-            GestureDetector(
-              child: const Icon(
-                Icons.favorite,
-                color: Colors.grey,
-                size: 20,
-              ),
-              onTap: () {},
-            )
-          ],
+        Text(
+          "${model.name!} \$",
+          style: const TextStyle(fontSize: 13),
         ),
+        GestureDetector(
+          child:  Icon(
+            Icons.favorite,
+            color: cubit.favorietsID.contains(model.id.toString()) ? Colors.red : Colors.grey,
+            size: 20,
+          ),
+          onTap: () {
+            cubit.addFavorites(productId: model.id.toString());
+          },
+        )
       ],
     ),
   );

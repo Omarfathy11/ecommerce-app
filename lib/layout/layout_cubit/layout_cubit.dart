@@ -21,7 +21,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
   LayoutCubit() : super(LayoutInitialState());
 
   int buttomNavindex = 0;
-  List<Widget>  LayoutScreens = [
+  List<Widget> LayoutScreens = [
     Homepage(),
     const CategoriesScreen(),
     const FavorietsScreen(),
@@ -53,7 +53,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
       if (response.statusCode == 200) {
         userModel = UserModel.fromjson(data: responseBody[0]['customer']);
 
-      //  print("response is : $responseBody");
+        //  print("response is : $responseBody");
 
         // print(userModel!.email);
 
@@ -64,6 +64,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
       print("Error fetching user data: $e");
     }
   }
+
 /*
   List<BannerModel> banners = [];
   void getBannersData() async {
@@ -85,7 +86,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
     Response response = await http.get(Uri.parse(
         'https://django-server-kiaw-production.up.railway.app/api/home/'));
     final responseBody = jsonDecode(response.body);
-    print("response is  $responseBody");
+    // print("response is  $responseBody");
 
     if (response.statusCode == 200) {
       for (var item in responseBody['categories']) {
@@ -105,7 +106,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
           'https://django-server-kiaw-production.up.railway.app/api/products/'),
     );
     var responseBody = jsonDecode(response.body);
-    print(" products data id : $responseBody");
+    // print(" products data id : $responseBody");
     if (response.statusCode == 200) {
       for (var item in responseBody) {
         products.add(ProductModel.fromJson(data: item));
@@ -124,6 +125,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
         .toList();
     emit(filterproductSuccessState());
   }
+
   List<CategoriesModel> filteredCategories = [];
   void filterCategories({required String input}) {
     filteredCategories = categories
@@ -132,20 +134,79 @@ class LayoutCubit extends Cubit<LayoutStates> {
         .toList();
     emit(filtercategoriesSuccessState());
   }
-  
+
   ProductModel? model;
   void getproductDetails({required int productid, int? productId}) async {
-        emit(GetProductsDetailsLoadingState());
+    emit(GetProductsDetailsLoadingState());
 
     Response response = await http.get(Uri.parse(
         'https://django-server-kiaw-production.up.railway.app/api/products/$productid'));
     var responseBody = jsonDecode(response.body);
-    print(" product details : $responseBody");
+    // print(" product details : $responseBody");
     if (response.statusCode == 200) {
-      model = ProductModel.fromJson(data : responseBody); // عشان الداتا محطوطة في ماب فلازم اعملها fromjson
+      model = ProductModel.fromJson(
+          data:
+              responseBody); // عشان الداتا محطوطة في ماب فلازم اعملها fromjson
       emit(GetProductDetailssSuccessState(model!));
     } else {
       emit(FailedToGetProductsDetailsState());
+    }
+  }
+
+  List<ProductModel> favorites = [];
+  Set<String> favorietsID = {};
+  Future<void> getFavorites() async {
+    Response response = await http.get(
+        Uri.parse(
+            "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          'Authorization': 'Bearer $token'
+        });
+    var responseBody = jsonDecode(response.body);
+    print(responseBody);
+    if (response.statusCode == 200) {
+      for (var item in responseBody) {
+        favorites.add(ProductModel.fromJson(data: item['product']));
+        favorietsID.add(item['product']['id'].toString());
+      }
+      print("favorites number is : ${favorites.length}");
+
+      emit(GetFavorietsSuccessState());
+    } else {
+      emit(FailedToGetFavorietsState());
+    }
+  }
+
+  void addFavorites({required String productId}) async {
+    Response response = await http.post(
+        Uri.parse(
+            "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
+        headers: {'Authorization': 'Bearer $token'},
+        body: {"product_id": productId});
+    var responseBody = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+        favorietsID.add(productId);
+    
+      emit(AddFavorietsSuccessState());
+    } else {
+      emit(AddFavorietsFailedState());
+    }
+  }
+   void deleteFavorite({required String productId}) async {
+    Response response = await http.delete(
+        Uri.parse(
+            "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
+        headers: {'Authorization': 'Bearer $token'},
+        body: {"product_id": productId});
+    if (response.statusCode == 200) {
+        // delete
+        favorietsID.remove(productId);
+     
+      
+      emit(RemoveFavorietsSuccessState());
+    } else {
+      emit(RemoveFavorietsFailedState());
     }
   }
 }

@@ -43,8 +43,7 @@ class CategoriesScreen extends StatelessWidget {
                         child: const Icon(
                           Icons.clear,
                         )),
-                    filled: true,
-                    fillColor: Colors.grey.withOpacity(0.3),
+                    
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
                     ),

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(
-          create: (context) => LayoutCubit()
+          create: (context) => LayoutCubit()..getFavorites()
             ..getUserData()
             ..getCategoriesData()
             ..getProductsData()

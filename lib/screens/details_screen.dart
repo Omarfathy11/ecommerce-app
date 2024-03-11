@@ -13,7 +13,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.white38,
       ),
       body: BlocConsumer<LayoutCubit, LayoutStates>(
         listener: (context, state) {},
@@ -75,14 +75,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Row(
                   children: [
-                    const Text(
-                      "quantity : ",
-                      style: TextStyle(fontSize: 16, color: Colors.brown),
-                    ),
-                    Text(
-                      productModel.quantity.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
+                  
                   ],
                 ),
               ),
