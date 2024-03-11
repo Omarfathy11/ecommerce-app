@@ -208,7 +208,10 @@ Widget _productItem({required ProductModel model, required LayoutCubit cubit}) {
             size: 20,
           ),
           onTap: () {
-            cubit.addFavorites(productId: model.id.toString());
+            cubit.favorietsID.contains(model.id.toString()) ?
+            cubit.deleteFavorite(productId: model.id.toString()):
+            cubit.addFavorites(productId: model.id.toString()) ;
+            
           },
         )
       ],

@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart%20';
-
 class LayoutCubit extends Cubit<LayoutStates> {
   LayoutCubit() : super(LayoutInitialState());
 
@@ -24,7 +23,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
   List<Widget> LayoutScreens = [
     Homepage(),
     const CategoriesScreen(),
-    const FavorietsScreen(),
+     FavorietsScreen(),
     const CartScreen(),
     const ProfileScreen()
   ]; // لازم بالترتيب
@@ -186,8 +185,10 @@ class LayoutCubit extends Cubit<LayoutStates> {
         body: {"product_id": productId});
     var responseBody = jsonDecode(response.body);
     if (response.statusCode == 200) {
-        favorietsID.add(productId);
-    
+       
+            // add
+            favorietsID.add(productId);
+          
       emit(AddFavorietsSuccessState());
     } else {
       emit(AddFavorietsFailedState());
