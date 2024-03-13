@@ -36,12 +36,22 @@ class FailedToGetProductsDetailsState extends LayoutStates{}
 class filterproductSuccessState extends LayoutStates{}
 class filtercategoriesSuccessState extends LayoutStates{}
 
-class GetFavorietsSuccessState extends LayoutStates{}
-class FailedToGetFavorietsState extends LayoutStates{}
+class FavoritesInitial  extends LayoutStates {}
 
-class AddFavorietsSuccessState extends LayoutStates{}
 
-class AddFavorietsFailedState extends LayoutStates{}
+class FavoritesSuccess extends LayoutStates{}
+class FavoritesLoaded extends LayoutStates {
+  final List<dynamic> favorites;
 
-class RemoveFavorietsSuccessState extends LayoutStates{}
-class RemoveFavorietsFailedState extends LayoutStates{}
+  FavoritesLoaded(this.favorites);
+}
+
+class FavoritesaddSuccess extends LayoutStates{}
+
+class FavoritesError extends LayoutStates {
+  final String errorMessage;
+
+  FavoritesError(this.errorMessage);
+}
+
+class FavoritesDeleted extends LayoutStates {}

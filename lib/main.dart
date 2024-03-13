@@ -28,17 +28,17 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(
-          create: (context) => LayoutCubit()..getFavorites()
+          create: (context) => LayoutCubit()
             ..getUserData()
             ..getCategoriesData()
-            ..getProductsData()
+            ..getProductsData()..getFavorites()
             
             ,
         )
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-        home: token != null && token == " " ?  LoginScreen() : LayoutScreen()),
+        home:  token != null && token == " " ?  LoginScreen() : LayoutScreen()),
     );
   }
 }

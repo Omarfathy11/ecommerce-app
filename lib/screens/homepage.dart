@@ -201,19 +201,19 @@ Widget _productItem({required ProductModel model, required LayoutCubit cubit}) {
           "${model.name!} \$",
           style: const TextStyle(fontSize: 13),
         ),
-        GestureDetector(
-          child:  Icon(
-            Icons.favorite,
+         IconButton(
+           icon: Icon( Icons.favorite,),
             color: cubit.favorietsID.contains(model.id.toString()) ? Colors.red : Colors.grey,
-            size: 20,
-          ),
-          onTap: () {
+           
+          
+          onPressed: () {
             cubit.favorietsID.contains(model.id.toString()) ?
             cubit.deleteFavorite(productId: model.id.toString()):
             cubit.addFavorites(productId: model.id.toString()) ;
             
           },
-        )
+         )
+        
       ],
     ),
   );

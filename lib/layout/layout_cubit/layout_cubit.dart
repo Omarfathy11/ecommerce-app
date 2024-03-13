@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart%20';
+
 class LayoutCubit extends Cubit<LayoutStates> {
   LayoutCubit() : super(LayoutInitialState());
 
@@ -23,7 +24,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
   List<Widget> LayoutScreens = [
     Homepage(),
     const CategoriesScreen(),
-     FavorietsScreen(),
+    FavorietsScreen(),
     const CartScreen(),
     const ProfileScreen()
   ]; // لازم بالترتيب
@@ -151,10 +152,12 @@ class LayoutCubit extends Cubit<LayoutStates> {
       emit(FailedToGetProductsDetailsState());
     }
   }
-
+ 
   List<ProductModel> favorites = [];
   Set<String> favorietsID = {};
   Future<void> getFavorites() async {
+      
+
     Response response = await http.get(
         Uri.parse(
             "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
@@ -170,14 +173,13 @@ class LayoutCubit extends Cubit<LayoutStates> {
         favorietsID.add(item['product']['id'].toString());
       }
       print("favorites number is : ${favorites.length}");
-
-      emit(GetFavorietsSuccessState());
+                emit(FavoritesLoaded(favorites));
     } else {
-      emit(FailedToGetFavorietsState());
+      emit(FavoritesError('Failed to fetch favorites'));
     }
   }
 
-  void addFavorites({required String productId}) async {
+ Future <void> addFavorites({required String productId}) async {
     Response response = await http.post(
         Uri.parse(
             "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
@@ -185,29 +187,27 @@ class LayoutCubit extends Cubit<LayoutStates> {
         body: {"product_id": productId});
     var responseBody = jsonDecode(response.body);
     if (response.statusCode == 200) {
-       
-            // add
             favorietsID.add(productId);
-          
-      emit(AddFavorietsSuccessState());
+
+        await getFavorites();
+      emit(FavoritesaddSuccess());
     } else {
-      emit(AddFavorietsFailedState());
-    }
+ emit(FavoritesError('Failed to fetch favorites'));    }
   }
-   void deleteFavorite({required String productId}) async {
+
+
+ void deleteFavorite({required String productId}) async {
     Response response = await http.delete(
         Uri.parse(
             "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
         headers: {'Authorization': 'Bearer $token'},
         body: {"product_id": productId});
     if (response.statusCode == 200) {
-        // delete
-        favorietsID.remove(productId);
-     
-      
-      emit(RemoveFavorietsSuccessState());
+            favorietsID.remove(productId);
+
+        emit(FavoritesDeleted());      
     } else {
-      emit(RemoveFavorietsFailedState());
+       emit(FavoritesError('Failed to delete favorite'));
     }
   }
 }
