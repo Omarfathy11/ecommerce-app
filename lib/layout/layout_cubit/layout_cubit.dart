@@ -204,8 +204,10 @@ class LayoutCubit extends Cubit<LayoutStates> {
         body: {"product_id": productId});
     if (response.statusCode == 200) {
             favorietsID.remove(productId);
+           
 
         emit(FavoritesDeleted());      
+        
     } else {
        emit(FavoritesError('Failed to delete favorite'));
     }

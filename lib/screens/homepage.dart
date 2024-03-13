@@ -13,74 +13,63 @@ class Homepage extends StatelessWidget {
   final pagecotroller = PageController();
 
   Homepage({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<LayoutCubit>(context);
-    return BlocConsumer<LayoutCubit, LayoutStates>(
-      listener: (context, state) {
-        if (state is GetProductDetailssSuccessState) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProductDetailsScreen(
-                productModel: state.model,
-              ),
-            ),
-          );
-        }
-      },
+    return BlocBuilder<LayoutCubit, LayoutStates>(
       builder: (context, state) {
         print(cubit.products.length);
         return Scaffold(
-            body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              TextFormField(
-                onChanged: (input) {
-                  cubit.filterProducts(input: input);
-                },
-                decoration: InputDecoration(
+          body: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                TextFormField(
+                  onChanged: (input) {
+                    cubit.filterProducts(input: input);
+                  },
+                  decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
                     hintText: "Search",
                     suffixIcon: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Homepage()),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.clear,
-                        )),
-                    
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Homepage()),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.clear,
+                      ),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
                     ),
-                    contentPadding: EdgeInsets.zero),
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 15),
-                child: Image.asset(
-                  "images/Frame 560.png",
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: SmoothPageIndicator(
-                  controller: pagecotroller,
-                  count: 3,
-                  axisDirection: Axis.horizontal,
-                  effect: const SlideEffect(
+                const SizedBox(
+                  height: 14,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 15),
+                  child: Image.asset(
+                    "images/Frame 560.png",
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: SmoothPageIndicator(
+                    controller: pagecotroller,
+                    count: 3,
+                    axisDirection: Axis.horizontal,
+                    effect: const SlideEffect(
                       spacing: 8.0,
                       radius: 25,
                       dotWidth: 24.0,
@@ -88,35 +77,37 @@ class Homepage extends StatelessWidget {
                       paintStyle: PaintingStyle.stroke,
                       strokeWidth: 1.5,
                       dotColor: Colors.grey,
-                      activeDotColor: secondColor),
+                      activeDotColor: secondColor,
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "categories",
-                    style: TextStyle(
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "categories",
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: mainColor),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              cubit.categories.isEmpty
-                  ? const Center(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                      child: ListView.separated(
+                        color: mainColor,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                cubit.categories.isEmpty
+                    ? const Center(
+                        child: CupertinoActivityIndicator(),
+                      )
+                    : SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           itemCount: cubit.categories.length,
                           scrollDirection: Axis.horizontal,
@@ -130,53 +121,60 @@ class Homepage extends StatelessWidget {
                               cubit.categories[index].name!,
                               style: const TextStyle(fontSize: 20),
                             );
-                          }),
-                    ),
-              Row(
-                children: const [
-                  Text(
-                    "Products",
-                    style: TextStyle(
+                          },
+                        ),
+                      ),
+                Row(
+                  children: const [
+                    Text(
+                      "Products",
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: mainColor),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              cubit.products.isEmpty
-                  ? const Center(
-                      child: CupertinoActivityIndicator(),
-                    )
-                  : GridView.builder(
-                      itemCount: cubit.filteredProducts.isEmpty
-                          ? cubit.products.length
-                          : cubit.filteredProducts.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: kDefaultPaddin,
-                              crossAxisSpacing: kDefaultPaddin,
-                              childAspectRatio: 0.75),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            cubit.getproductDetails(
-                                productid: cubit.products[index].id!);
-                          },
-                          child: _productItem(
+                        color: mainColor,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                cubit.products.isEmpty
+                    ? const Center(
+                        child: CupertinoActivityIndicator(),
+                      )
+                    : GridView.builder(
+                        itemCount: cubit.filteredProducts.isEmpty
+                            ? cubit.products.length
+                            : cubit.filteredProducts.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: kDefaultPaddin,
+                          crossAxisSpacing: kDefaultPaddin,
+                          childAspectRatio: 0.75,
+                        ),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              cubit.getproductDetails(
+                                  productid: cubit.products[index].id!);
+                            },
+                            child: _productItem(
                               model: cubit.filteredProducts.isEmpty
                                   ? cubit.products[index]
-                                  : cubit.filteredProducts[index], cubit: cubit),
-                        );
-                      }),
-            ],
+                                  : cubit.filteredProducts[index],
+                              cubit: cubit,
+                            ),
+                          );
+                        },
+                      ),
+              ],
+            ),
           ),
-        ));
+        );
       },
     );
   }
@@ -201,19 +199,16 @@ Widget _productItem({required ProductModel model, required LayoutCubit cubit}) {
           "${model.name!} \$",
           style: const TextStyle(fontSize: 13),
         ),
-         IconButton(
-           icon: Icon( Icons.favorite,),
-            color: cubit.favorietsID.contains(model.id.toString()) ? Colors.red : Colors.grey,
-           
-          
+        MaterialButton(
           onPressed: () {
-            cubit.favorietsID.contains(model.id.toString()) ?
-            cubit.deleteFavorite(productId: model.id.toString()):
-            cubit.addFavorites(productId: model.id.toString()) ;
-            
+            cubit.addFavorites(productId: model.id.toString());
           },
-         )
-        
+          child: Text("add to favorites"),
+          textColor: Colors.white,
+          color: mainColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+        )
       ],
     ),
   );
