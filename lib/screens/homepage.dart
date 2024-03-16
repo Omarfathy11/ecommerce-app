@@ -9,28 +9,29 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Homepage extends StatefulWidget {
-
+class Homepage extends StatelessWidget {
   Homepage({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<LayoutCubit>(context).emit(GetProductsSuccessState());
-  }
   final pagecotroller = PageController();
 
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<LayoutCubit>(context);
-    return BlocBuilder<LayoutCubit, LayoutStates>(
+    return BlocConsumer<LayoutCubit, LayoutStates>(
+      listener: (context, state) {
+        if (state is GetProductDetailssSuccessState) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailsScreen(
+                productModel: state.model,
+              ),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         print(cubit.products.length);
         return Scaffold(

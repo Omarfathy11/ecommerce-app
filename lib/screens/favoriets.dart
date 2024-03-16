@@ -8,18 +8,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FavorietsScreen extends StatefulWidget {
-  @override
-  State<FavorietsScreen> createState() => _FavorietsScreenState();
-}
-
-class _FavorietsScreenState extends State<FavorietsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<LayoutCubit>(context).getFavorites();
-  }
-
+class FavorietsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<LayoutCubit>(context);
@@ -78,19 +67,9 @@ class _FavorietsScreenState extends State<FavorietsScreen> {
                   },
                 );
               } else {
-                return Scaffold(
-                    body: BlocProvider(
-                        create: (context) => LayoutCubit()..getFavorites(),
-                        child: BlocBuilder<LayoutCubit, LayoutStates>(
-                            builder: (context, state) {
-                          if (state is FavoritesInitial) {
-                            return Center(child: CircularProgressIndicator());
-                          } else {
-                            return const Center(
-                              child: CupertinoActivityIndicator(),
-                            );
-                          }
-                        })));
+                return const Center(
+                  child: CupertinoActivityIndicator(),
+                );
               }
             })));
   }

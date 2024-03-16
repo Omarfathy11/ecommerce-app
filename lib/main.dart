@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: lightTheme,
           debugShowCheckedModeBanner: false,
-        home:   token != null && token == " " ?  LoginScreen() : LayoutScreen()),
+        home:    token != null && token == " " ?  LoginScreen() : LayoutScreen()),
     );
   }
 }

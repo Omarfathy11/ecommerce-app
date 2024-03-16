@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductDetailsScreen extends StatelessWidget {
   final ProductModel productModel;
 
-   ProductDetailsScreen({required this.productModel});
+  ProductDetailsScreen({required this.productModel});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,20 @@ class ProductDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.white38,
       ),
       body: BlocConsumer<LayoutCubit, LayoutStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is GetProductDetailssSuccessState) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailsScreen(
+                  productModel: state.model,
+                ),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
-           final cubit = BlocProvider.of<LayoutCubit>(context);
+          final cubit = BlocProvider.of<LayoutCubit>(context);
 
           return ListView(
             children: [
@@ -74,9 +85,7 @@ class ProductDetailsScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Row(
-                  children: [
-                  
-                  ],
+                  children: [],
                 ),
               ),
             ],
