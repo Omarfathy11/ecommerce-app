@@ -8,6 +8,7 @@ import 'package:finalproject/screens/register_screen.dart';
 import 'package:finalproject/screens/splash_screen.dart';
 import 'package:finalproject/shared/constants/constants.dart';
 import 'package:finalproject/shared/network/local_network.dart';
+import 'package:finalproject/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,8 +38,10 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        themeMode: ThemeMode.light,
+        theme: lightTheme,
           debugShowCheckedModeBanner: false,
-        home:  token != null && token == " " ?  LoginScreen() : LayoutScreen()),
+        home:   token != null && token == " " ?  LoginScreen() : LayoutScreen()),
     );
   }
 }

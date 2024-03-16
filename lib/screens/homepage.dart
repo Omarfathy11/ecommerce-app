@@ -9,12 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Homepage extends StatelessWidget {
-  final pagecotroller = PageController();
+class Homepage extends StatefulWidget {
 
   Homepage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<LayoutCubit>(context).emit(GetProductsSuccessState());
+  }
+  final pagecotroller = PageController();
 
   @override
   Widget build(BuildContext context) {

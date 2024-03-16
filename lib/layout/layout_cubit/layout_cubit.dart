@@ -154,9 +154,9 @@ class LayoutCubit extends Cubit<LayoutStates> {
   }
 
   List<ProductModel> favorites = [];
-Set<String> favorietsID = {};
 
 Future<void> getFavorites() async {
+  emit(FavoritesLoadnigState());
   try {
     favorites.clear();
 
@@ -167,23 +167,22 @@ Future<void> getFavorites() async {
         'Authorization': 'Bearer $token'
       },
     );
-
+    ProductModel? model;
     var responseBody = jsonDecode(response.body);
     print(responseBody);
 
     if (response.statusCode == 200) {
       for (var item in responseBody) {
         favorites.add(ProductModel.fromJson(data: item['product']));
-        favorietsID.add(item['product']['id'].toString());
       }
 
       print("favorites number is: ${favorites.length}");
-      emit(FavoritesLoadedState(favorites));
+      emit(FavoritesSuccessState(favorites));
     } else {
       emit(FavoritesErrorState());
     }
   } catch (error) {
-    emit(FavoritesErrorState());
+    emit(FavoritesErrorStatError());
     print('Error: $error');
   }
 }
@@ -201,15 +200,19 @@ Future<void> getFavorites() async {
       emit(FavoritesError('Failed to fetch favorites'));
     }
   }
-
   void deleteFavorite({required String productId}) async {
+    emit(FavoritesLoadingDeleted());
     Response response = await http.delete(
         Uri.parse(
             "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
         headers: {'Authorization': 'Bearer $token'},
         body: {"product_id": productId});
+
     if (response.statusCode == 200) {
-      emit(FavoritesDeleted(favorites));
+        
+      emit(FavoritesDeleted());
+      await getFavorites();
+    
     } else {
       emit(FavoritesError('Failed to delete favorite'));
     }
