@@ -1,3 +1,5 @@
+import 'package:finalproject/cubit_favorites/favorites_cubit.dart';
+import 'package:finalproject/cubit_favorites/favorites_state.dart';
 import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
 import 'package:finalproject/layout/layout_cubit/layout_state.dart';
 import 'package:finalproject/models/products_model.dart';
@@ -15,8 +17,8 @@ class FavorietsScreen extends StatelessWidget {
 
     return Scaffold(
         body: BlocProvider(
-            create: (context) => LayoutCubit()..getFavorites(),
-            child: BlocBuilder<LayoutCubit, LayoutStates>(
+            create: (context) => FavoritesCubit()..getFavorites(),
+            child: BlocBuilder<FavoritesCubit, FavoritesState>(
                 builder: (context, state) {
               if (state is FavoritesInitial) {
                 return Center(child: CircularProgressIndicator());
@@ -48,7 +50,7 @@ class FavorietsScreen extends StatelessWidget {
                               Text(favorites[index].price!),
                               MaterialButton(
                                 onPressed: () {
-                                  BlocProvider.of<LayoutCubit>(context)
+                                  BlocProvider.of<FavoritesCubit>(context)
                                       .deleteFavorite(
                                           productId:
                                               favorites[index].id.toString());

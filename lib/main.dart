@@ -1,11 +1,7 @@
 import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
 import 'package:finalproject/layout/layout_screen.dart';
 import 'package:finalproject/screens/authentication_screen/cubit/auth_cubit_cubit.dart';
-import 'package:finalproject/screens/homepage.dart';
 import 'package:finalproject/screens/login_screen.dart';
-import 'package:finalproject/screens/profile_screen/profile_screen.dart';
-import 'package:finalproject/screens/register_screen.dart';
-import 'package:finalproject/screens/splash_screen.dart';
 import 'package:finalproject/shared/constants/constants.dart';
 import 'package:finalproject/shared/network/local_network.dart';
 import 'package:finalproject/style/colors.dart';
@@ -32,7 +28,7 @@ class MyApp extends StatelessWidget {
           create: (context) => LayoutCubit()
             ..getUserData()
             ..getCategoriesData()
-            ..getProductsData()..getFavorites()
+            ..getProductsData()
             
             ,
         )
@@ -41,7 +37,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: lightTheme,
           debugShowCheckedModeBanner: false,
-        home:    token != null && token == " " ?  LoginScreen() : LayoutScreen()),
+        home:  token != null && token == " " ?  LoginScreen() : LayoutScreen()),
     );
   }
 }

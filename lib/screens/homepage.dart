@@ -1,3 +1,4 @@
+import 'package:finalproject/cubit_favorites/favorites_cubit.dart';
 import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
 import 'package:finalproject/layout/layout_cubit/layout_state.dart';
 import 'package:finalproject/models/products_model.dart';
@@ -19,6 +20,7 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<LayoutCubit>(context);
+
     return BlocConsumer<LayoutCubit, LayoutStates>(
       listener: (context, state) {
         if (state is GetProductDetailssSuccessState) {
@@ -34,10 +36,13 @@ class Homepage extends StatelessWidget {
       },
       builder: (context, state) {
         print(cubit.products.length);
+
         return Scaffold(
+          
           body: Padding(
             padding: const EdgeInsets.all(12.0),
             child: ListView(
+          
               shrinkWrap: true,
               children: [
                 TextFormField(
@@ -161,24 +166,28 @@ class Homepage extends StatelessWidget {
                             : cubit.filteredProducts.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
+                        clipBehavior: Clip.none,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: kDefaultPaddin,
                           crossAxisSpacing: kDefaultPaddin,
                           childAspectRatio: 0.75,
+                          
                         ),
                         itemBuilder: (context, index) {
+                          final favorite = FavoritesCubit();
                           return InkWell(
                             onTap: () {
                               cubit.getproductDetails(
                                   productid: cubit.products[index].id!);
                             },
                             child: _productItem(
+
                               model: cubit.filteredProducts.isEmpty
                                   ? cubit.products[index]
                                   : cubit.filteredProducts[index],
-                              cubit: cubit,
+                              favorite: favorite,
                             ),
                           );
                         },
@@ -192,7 +201,7 @@ class Homepage extends StatelessWidget {
   }
 }
 
-Widget _productItem({required ProductModel model, required LayoutCubit cubit}) {
+Widget _productItem({required ProductModel model, required FavoritesCubit favorite}) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     child: Column(
@@ -213,7 +222,7 @@ Widget _productItem({required ProductModel model, required LayoutCubit cubit}) {
         ),
         MaterialButton(
           onPressed: () {
-            cubit.addFavorites(productId: model.id.toString());
+            favorite.addFavorites(productId: model.id.toString());
           },
           child: Text("add to favorites"),
           textColor: Colors.white,

@@ -36,27 +36,3 @@ class FailedToGetProductsDetailsState extends LayoutStates{}
 class filterproductSuccessState extends LayoutStates{}
 class filtercategoriesSuccessState extends LayoutStates{}
 
-class FavoritesInitial  extends LayoutStates {}
-
-
-class FavoritesLoadnigState extends LayoutStates{}
-class  FavoritesSuccessState extends LayoutStates {
-  final List<ProductModel> favorites;
-
-  FavoritesSuccessState(this.favorites);
-}
-class FavoritesErrorState extends LayoutStates{}
-class FavoritesErrorStatError extends LayoutStates{}
-
-
-class FavoritesaddSuccess extends LayoutStates{}
-
-class FavoritesError extends LayoutStates {
-  final String errorMessage;
-
-  FavoritesError(this.errorMessage);
-}
-class FavoritesLoadingDeleted extends LayoutStates {}
-class FavoritesDeleted extends LayoutStates {
- 
-}

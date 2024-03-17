@@ -16,10 +16,11 @@ class LayoutScreen extends StatelessWidget {
 
      
       builder: (context, state) {
-        return Scaffold(appBar: AppBar(backgroundColor: thirdColor,title: Image.asset('images/Frame 928.png', height: 150,width: 150,),
+        return Scaffold(appBar: AppBar(elevation: 0,backgroundColor: thirdColor,title: Image.asset('images/Frame 928.png', height: 150,width: 150,),
         
         ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
         selectedItemColor: mainColor,
         unselectedItemColor: Colors.grey,
         currentIndex: cubit.buttomNavindex, // بيبقي واقف علي اول ايتم 

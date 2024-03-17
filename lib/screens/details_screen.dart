@@ -7,29 +7,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductDetailsScreen extends StatelessWidget {
   final ProductModel productModel;
 
-  ProductDetailsScreen({required this.productModel});
+   ProductDetailsScreen({required this.productModel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white38,
+        actions: <Widget>[
+          IconButton(onPressed: (){}, icon: const Icon(Icons.shopping_cart))
+
+        ],
       ),
       body: BlocConsumer<LayoutCubit, LayoutStates>(
-        listener: (context, state) {
-          if (state is GetProductDetailssSuccessState) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductDetailsScreen(
-                  productModel: state.model,
-                ),
-              ),
-            );
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
-          final cubit = BlocProvider.of<LayoutCubit>(context);
+           final cubit = BlocProvider.of<LayoutCubit>(context);
 
           return ListView(
             children: [
@@ -82,12 +75,7 @@ class ProductDetailsScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Row(
-                  children: [],
-                ),
-              ),
+              
             ],
           );
         },
