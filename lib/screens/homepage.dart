@@ -153,7 +153,7 @@ class Homepage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 cubit.products.isEmpty
@@ -176,7 +176,7 @@ class Homepage extends StatelessWidget {
                           
                         ),
                         itemBuilder: (context, index) {
-                          final favorite = FavoritesCubit();
+                          final favorite = FavoritesCubit()..favorites;
                           return InkWell(
                             onTap: () {
                               cubit.getproductDetails(

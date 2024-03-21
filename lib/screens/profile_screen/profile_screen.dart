@@ -1,4 +1,3 @@
-import 'package:finalproject/screens/homepage.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
 import 'package:finalproject/layout/layout_cubit/layout_state.dart';
@@ -21,54 +20,57 @@ class ProfileScreen extends StatelessWidget {
               return Scaffold(
                 
                 body: cubit.userModel != null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 170,
-                          ),
-                          const Text(
-                            'Edit Your profile',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: 'Full name',
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                label: Text(cubit.userModel!.full_name!),
-                                prefixIcon: const Icon(LineAwesomeIcons.user)),
-                          ),
-                          //  Text(cubit.userModel!.full_name!),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: 'Email',
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                label: Text(cubit.userModel!.email!),
-                                prefixIcon:
-                                    const Icon(LineAwesomeIcons.envelope_1)),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: 'phone',
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                label: Text(cubit.userModel!.phone_number!),
-                                prefixIcon: const Icon(LineAwesomeIcons.phone)),
-                          ),
-                        ],
-                      )
+                    ? Padding(
+                      padding: const EdgeInsets.all(9.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 170,
+                            ),
+                            const Text(
+                              'Edit Your profile',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                    
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: 'Full name',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  label: Text(cubit.userModel!.full_name!),
+                                  prefixIcon: const Icon(LineAwesomeIcons.user)),
+                            ),
+                            //  Text(cubit.userModel!.full_name!),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  label: Text(cubit.userModel!.email!),
+                                  prefixIcon:
+                                      const Icon(LineAwesomeIcons.envelope_1)),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: 'phone',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  label: Text(cubit.userModel!.phone_number!),
+                                  prefixIcon: const Icon(LineAwesomeIcons.phone)),
+                            ),
+                          ],
+                        ),
+                    )
                     : const Center(
                         child: CircularProgressIndicator(),
                       ),

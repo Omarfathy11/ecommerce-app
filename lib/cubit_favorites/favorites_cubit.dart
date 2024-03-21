@@ -3,11 +3,9 @@ import 'package:finalproject/cubit_favorites/favorites_state.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:bloc/bloc.dart';
-import 'package:finalproject/layout/layout_cubit/layout_state.dart';
 import 'package:finalproject/models/products_model.dart';
 import 'package:finalproject/shared/constants/constants.dart';
 import 'package:http/http.dart%20';
-import 'package:meta/meta.dart';
 
 
 class FavoritesCubit extends Cubit<FavoritesState> {

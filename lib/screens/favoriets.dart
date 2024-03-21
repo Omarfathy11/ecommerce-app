@@ -1,13 +1,11 @@
 import 'package:finalproject/cubit_favorites/favorites_cubit.dart';
 import 'package:finalproject/cubit_favorites/favorites_state.dart';
 import 'package:finalproject/layout/layout_cubit/layout_cubit.dart';
-import 'package:finalproject/layout/layout_cubit/layout_state.dart';
-import 'package:finalproject/models/products_model.dart';
+
 import 'package:finalproject/shared/style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavorietsScreen extends StatelessWidget {
@@ -70,7 +68,7 @@ class FavorietsScreen extends StatelessWidget {
                 );
               } else {
                 return const Center(
-                  child: CupertinoActivityIndicator(),
+                  child: CupertinoActivityIndicator( radius: 40,color: Colors.amber),
                 );
               }
             })));

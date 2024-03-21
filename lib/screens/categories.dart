@@ -4,10 +4,8 @@ import 'package:finalproject/models/categories.dart';
 import 'package:finalproject/shared/style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -37,13 +35,12 @@ class CategoriesScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CategoriesScreen()),
+                                builder: (context) => const CategoriesScreen()),
                           );
                         },
                         child: const Icon(
                           Icons.clear,
                         )),
-                    
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
                     ),
@@ -85,19 +82,16 @@ class CategoriesScreen extends StatelessWidget {
                                 mainAxisSpacing: 12,
                                 crossAxisSpacing: 10),
                         itemBuilder: (context, index) {
-                          return Container(
-                            child: Column(
-                              children: [
-                                Text(
-                                  cubit.filteredCategories.isEmpty
-                                      ? categoriesdata[index].name!
-                                      : cubit.filteredCategories[index].name!,
-                                  style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
+                          return Column(
+                            children: [
+                              Text(
+                                cubit.filteredCategories.isEmpty
+                                    ? categoriesdata[index].name!
+                                    : cubit.filteredCategories[index].name!,
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              )
+                            ],
                           );
                         }),
                   ),

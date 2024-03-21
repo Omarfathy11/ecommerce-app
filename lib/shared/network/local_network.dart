@@ -1,6 +1,5 @@
 
-import 'package:finalproject/screens/authentication_screen/cubit/auth_cubit_state.dart';
-import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheNetwork{

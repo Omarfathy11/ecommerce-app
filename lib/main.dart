@@ -34,10 +34,8 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        themeMode: ThemeMode.light,
-        theme: lightTheme,
           debugShowCheckedModeBanner: false,
-        home:  token != null && token == " " ?  LoginScreen() : LayoutScreen()),
+        home:  token != null && token == " " ?  const LoginScreen() : const LayoutScreen()),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:finalproject/layout/layout_cubit/layout_state.dart';
 import 'package:finalproject/layout/user_model.dart';
-import 'package:finalproject/models/banner_model.dart';
 import 'package:finalproject/models/categories.dart';
 import 'package:finalproject/models/products_model.dart';
 import 'package:finalproject/screens/cart.dart';
@@ -11,7 +10,6 @@ import 'package:finalproject/screens/favoriets.dart';
 import 'package:finalproject/screens/homepage.dart';
 import 'package:finalproject/screens/profile_screen/profile_screen.dart';
 import 'package:finalproject/shared/constants/constants.dart';
-import 'package:finalproject/shared/network/local_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;

@@ -1,8 +1,6 @@
 import 'package:finalproject/layout/layout_screen.dart';
 import 'package:finalproject/screens/authentication_screen/cubit/auth_cubit_cubit.dart';
 import 'package:finalproject/screens/authentication_screen/cubit/auth_cubit_state.dart';
-import 'package:finalproject/screens/homepage.dart';
-import 'package:finalproject/screens/profile_screen/profile_screen.dart';
 import 'package:finalproject/screens/register_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -30,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state is LoginSuccessState) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LayoutScreen()));
+              context, MaterialPageRoute(builder: (context) => const LayoutScreen()));
         } else if (state is FailedToLoginState) {
           showDialog(
               context: context,

@@ -1,9 +1,5 @@
-
-import 'package:finalproject/screens/login_screen.dart';
 import 'package:finalproject/screens/register_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class SplasScreen extends StatefulWidget {
   const SplasScreen({super.key});
@@ -16,7 +12,7 @@ class _SplasScreenState extends State<SplasScreen> {
   @override
   void initState() {
     
-    Future.delayed(Duration(seconds: 4), (){
+    Future.delayed(const Duration(seconds: 4), (){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterScreen()));
     } );  }
   @override

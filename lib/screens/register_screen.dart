@@ -1,9 +1,7 @@
 import 'package:finalproject/layout/layout_screen.dart';
 import 'package:finalproject/screens/authentication_screen/cubit/auth_cubit_cubit.dart';
 import 'package:finalproject/screens/authentication_screen/cubit/auth_cubit_state.dart';
-import 'package:finalproject/screens/homepage.dart';
 import 'package:finalproject/screens/login_screen.dart';
-import 'package:finalproject/shared/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
       listener: (context, state) {
 
         if(state is RegisterSuccessState){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LayoutScreen()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LayoutScreen()));
         }
         else if (state is FailedToRegisterState){
           showDialog(context: context, builder: (context) => AlertDialog(
