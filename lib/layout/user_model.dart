@@ -1,65 +1,53 @@
-import 'package:flutter/material.dart';
-
-
 class UserModel {
-  String? full_name;
-  String? email;
-  String? phone_number;
   int? id;
-  // constrcutor
-  UserModel({this.id, this.full_name, this.email, this.phone_number});
+  Customer? customer;
+  Null? bio;
+  String? image;
 
-  // named constrcutor
-  UserModel.fromjson({required Map<String, dynamic> data}){
-       // Refactoring map/json
-       full_name  = data['full_name'];
-       email  = data['email'];
-       phone_number  = data['phone_number'];
-       id = data['id'];
+  UserModel({this.id, this.customer, this.bio, this.image});
 
+  UserModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    customer = json['customer'] != null
+        ? new Customer.fromJson(json['customer'])
+        : null;
+    bio = json['bio'];
+    image = json['image'];
   }
 
-
-  // to map 
-  Map<String, dynamic> toMap(){
-    return {
-      'name' : full_name,
-      'email' : email,
-      'phone_number' : phone_number,
-
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    if (this.customer != null) {
+      data['customer'] = this.customer!.toJson();
+    }
+    data['bio'] = this.bio;
+    data['image'] = this.image;
+    return data;
   }
-
 }
-/*
-class UserModel {
-  String? full_name;
-  String? email;
-  String? phone_number;
+
+class Customer {
   int? id;
-  // constrcutor
-  UserModel({this.id, this.full_name, this.email, this.phone_number});
+  String? email;
+  String? fullName;
+  String? phoneNumber;
 
-  // named constrcutor
-  UserModel.fromjson({required Map<String, dynamic> data}){
-       // Refactoring map/json
-       full_name  = data['full_name'];
-       email  = data['email'];
-       phone_number  = data['phone_number'];
-       id = data['id'];
+  Customer({this.id, this.email, this.fullName, this.phoneNumber});
 
+  Customer.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    email = json['email'];
+    fullName = json['full_name'];
+    phoneNumber = json['phone_number'];
   }
 
-
-  // to map 
-  Map<String, dynamic> toMap(){
-    return {
-      'full_name' : full_name,
-      'email' : email,
-      'phone_number' : phone_number,
-
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['email'] = this.email;
+    data['full_name'] = this.fullName;
+    data['phone_number'] = this.phoneNumber;
+    return data;
   }
-
 }
-*/

@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
             ..getCategoriesData()
             ..getProductsData()
             
+            
             ,
         )
       ],

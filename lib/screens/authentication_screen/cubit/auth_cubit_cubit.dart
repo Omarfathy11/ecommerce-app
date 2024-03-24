@@ -25,7 +25,7 @@ class AuthCubit extends Cubit<AuthStates>{
     Response response = await http.post(
       // request Url = base url + method url ( endpoint ) = https://student.valuxapps.com + /api/register
       Uri.parse(
-          'https://django-server-kiaw-production.up.railway.app/customers/signup/'),
+          'https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/customers/signup/'),
       body: {
         'full_name': full_name,
         'email': email,
@@ -50,7 +50,7 @@ class AuthCubit extends Cubit<AuthStates>{
       Response response = await http.post(
         // request => url = base url + method url
         Uri.parse(
-            'https://django-server-kiaw-production.up.railway.app/customers/login/'),
+            'https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/customers/login/'),
         body: {'email_or_phone': email, 'password': password},
       );
       if (response.statusCode == 200) {

@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             icon: hidden ? const Icon(Icons.visibility_off, color: Colors.red,) :const Icon(Icons.visibility, color: Colors.red,)),
                         hintText: "password",
-                        border: OutlineInputBorder()),
+                        border: const OutlineInputBorder()),
                   ),
                   const SizedBox(
                     height: 20,
@@ -112,14 +112,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: passwordController.text);
                         }
                       },
-                       child:  Text(
-                        state is RegisterLoadingState ? "Loading ..." : "Login",
-                        style:  TextStyle(fontSize: 17, color: Colors.black),
-                      ),
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                       textColor: Colors.black,
                       color: Colors.redAccent,
                       minWidth: double.infinity,
+                       child:  Text(
+                        state is RegisterLoadingState ? "Loading ..." : "Login",
+                        style: const TextStyle(fontSize: 17, color: Colors.black),
+                      ),
                     ),
                   ),
                   const SizedBox(

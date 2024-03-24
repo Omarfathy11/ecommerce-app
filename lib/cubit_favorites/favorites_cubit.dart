@@ -20,7 +20,7 @@ Future<void> getFavorites() async {
     favorites.clear();
 
     Response response = await http.get(
-      Uri.parse("https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
+      Uri.parse("https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/wishlists/my-wishlist/"),
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
         'Authorization': 'Bearer $token'
@@ -47,7 +47,7 @@ Future<void> getFavorites() async {
   void addFavorites({required String productId}) async {
     Response response = await http.post(
         Uri.parse(
-            "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
+            "https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/wishlists/my-wishlist/"),
         headers: {'Authorization': 'Bearer $token'},
         body: {"product_id": productId});
     var responseBody = jsonDecode(response.body);
@@ -61,7 +61,7 @@ Future<void> getFavorites() async {
     emit(FavoritesLoadingDeleted());
     Response response = await http.delete(
         Uri.parse(
-            "https://django-server-kiaw-production.up.railway.app/whishlists/my-whishlist/"),
+            "https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/wishlists/my-wishlist/"),
         headers: {'Authorization': 'Bearer $token'},
         body: {"product_id": productId});
 

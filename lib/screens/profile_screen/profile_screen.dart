@@ -25,8 +25,9 @@ class ProfileScreen extends StatelessWidget {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Center(child: SizedBox(height: 150,width: 150,child: ClipRRect(borderRadius: BorderRadius.circular(100),child: Image.network(cubit.userModel!.image!,)))),
                             const SizedBox(
-                              height: 170,
+                              height: 30,
                             ),
                             const Text(
                               'Edit Your profile',
@@ -38,13 +39,14 @@ class ProfileScreen extends StatelessWidget {
                     
                             TextFormField(
                               decoration: InputDecoration(
+                                
                                   hintText: 'Full name',
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20)),
-                                  label: Text(cubit.userModel!.full_name!),
+                                  label: Text(cubit.userModel!.customer!.fullName!),
                                   prefixIcon: const Icon(LineAwesomeIcons.user)),
                             ),
-                            //  Text(cubit.userModel!.full_name!),
+                        //      Text(cubit.userModel!.full_name!),
                             const SizedBox(
                               height: 20,
                             ),
@@ -53,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                                   hintText: 'Email',
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20)),
-                                  label: Text(cubit.userModel!.email!),
+                                  label: Text(cubit.userModel!.customer!.email!),
                                   prefixIcon:
                                       const Icon(LineAwesomeIcons.envelope_1)),
                             ),
@@ -65,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
                                   hintText: 'phone',
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20)),
-                                  label: Text(cubit.userModel!.phone_number!),
+                                  label: Text(cubit.userModel!.customer!.phoneNumber!),
                                   prefixIcon: const Icon(LineAwesomeIcons.phone)),
                             ),
                           ],

@@ -40,7 +40,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
     try {
       Response response = await http.get(
         Uri.parse(
-            "https://django-server-kiaw-production.up.railway.app/customers/profiles/"),
+            "https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/customers/profiles/"),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           'Authorization': 'Bearer $token',
@@ -49,7 +49,8 @@ class LayoutCubit extends Cubit<LayoutStates> {
       var responseBody = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        userModel = UserModel.fromjson(data: responseBody[0]['customer']);
+        userModel = UserModel.fromJson(responseBody[0]);
+        
 
         //  print("response is : $responseBody");
 
@@ -82,7 +83,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
   List<CategoriesModel> categories = [];
   void getCategoriesData() async {
     Response response = await http.get(Uri.parse(
-        'https://django-server-kiaw-production.up.railway.app/api/home/'));
+        'https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/api/home/'));
     final responseBody = jsonDecode(response.body);
     // print("response is  $responseBody");
 
@@ -101,7 +102,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
     emit(GetProductsLoadingState());
     Response response = await http.get(
       Uri.parse(
-          'https://django-server-kiaw-production.up.railway.app/api/products/'),
+          'https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/api/products/'),
     );
     var responseBody = jsonDecode(response.body);
     // print(" products data id : $responseBody");
@@ -138,7 +139,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
     emit(GetProductsDetailsLoadingState());
 
     Response response = await http.get(Uri.parse(
-        'https://django-server-kiaw-production.up.railway.app/api/products/$productid'));
+        'https://e-commerce-graduation-projec-git-68601c-mahmoud-hefnys-projects.vercel.app/api/products/$productid'));
     var responseBody = jsonDecode(response.body);
     // print(" product details : $responseBody");
     if (response.statusCode == 200) {

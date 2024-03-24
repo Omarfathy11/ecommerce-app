@@ -62,11 +62,11 @@ class RegisterScreen extends StatelessWidget {
                     BlocProvider.of<AuthCubit>(context).register(full_name: nameController.text, email: emailController.text, password: passwordController.text, phone_number: phoneController.text);
                    } 
                   },
-                   child:  Text(state is RegisterLoadingState ? "Loading ..." :  "create account", style: TextStyle(fontSize: 17,color: Colors.black),),
                    padding: const EdgeInsets.symmetric(vertical: 15.0),
                    textColor: Colors.black,
                   color: Colors.redAccent,
                   minWidth: double.infinity,
+                   child:  Text(state is RegisterLoadingState ? "Loading ..." :  "create account", style: const TextStyle(fontSize: 17,color: Colors.black),),
                   ),
                 ),
               const SizedBox(height: 20,),
@@ -79,7 +79,7 @@ class RegisterScreen extends StatelessWidget {
                             InkWell(
                               onTap: ()
                               {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                               },
                               child: const Text('login ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
                                   
@@ -88,7 +88,7 @@ class RegisterScreen extends StatelessWidget {
                           ],
                           
                         ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
               ],),
             ),
           ),
@@ -112,7 +112,7 @@ Widget _textFielditem({bool? isScure  ,required TextEditingController controller
                 obscureText: isScure ?? false,
                   decoration:  InputDecoration(
                     hintText: hintText,
-                    border: OutlineInputBorder()
+                    border: const OutlineInputBorder()
                   ),
                )
 ;
